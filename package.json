@@ -1,0 +1,28 @@
+{
+  "name": "sforest",
+  "version": "0.0.1",
+  "description": "A skew-binary random access list based on C. Okasaki's book.",
+  "main": "sforest.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alecroy/sforest.git"
+  },
+  "keywords": [
+    "skew",
+    "random",
+    "access",
+    "list",
+    "data",
+    "structure",
+    "okasaki"
+  ],
+  "author": "Alec Hollingsworth",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alecroy/sforest/issues"
+  },
+  "homepage": "https://github.com/alecroy/sforest#readme"
+}
