@@ -10,12 +10,34 @@ SForest.prototype.isEmpty = function() {
 
 SForest.prototype.cons = function(element) {
   var sf = new SForest();
+  var tree;
 
-  if (this.trees.length < 2) { // Room for just 1 more
-    var tree = {size: 1, value: element, left: null, right: null};
+  if (this.trees.length < 2 || // Don't even have two trees, add a 1
+    this.trees[0].size < this.trees[1].size) { // Two trees, different sizes
+    tree = { size: 1, value: element, left: null, right: null };
     sf.trees = [tree].concat(this.trees);
+  } else { // A leading 2, a pair of trees of the same size
+    tree = {
+      size: this.trees[0].size * 2 + 1,
+      value: element,
+      left: this.trees[0],
+      right: this.trees[1],
+    };
+    sf.trees = [tree].concat(this.trees.slice(2));
   }
 
+  return sf;
+};
+
+SForest.prototype.prepend = function(array) {
+  if (array === undefined) {
+    return this;
+  }
+
+  var sf = this;
+  for (var i = array.length - 1; i >= 0; i--) {
+    sf = sf.cons(array[i]);
+  }
   return sf;
 };
 

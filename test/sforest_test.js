@@ -12,7 +12,7 @@ describe('the SForest data structure', function() {
     });
   });
 
-  describe('conses just like a list', function() {
+  describe('conses and prints just like a list', function() {
     it('1 cons [] is not empty', function() {
       var one = new SForest().cons(1);
       expect(one).to.not.be.null;
@@ -31,6 +31,24 @@ describe('the SForest data structure', function() {
     it('1 cons 2 cons [] prints as "[1, 2]"', function() {
       var oneTwo = new SForest().cons(2).cons(1);
       expect(oneTwo.toString()).to.equal('[1, 2]');
+    });
+  });
+
+  describe('can be prepended to just like a list', function() {
+    var oneTwoThree = new SForest().prepend([1, 2, 3]);
+
+    it('[].prepend([1, 2, 3]) is not empty', function() {
+      expect(oneTwoThree).to.not.be.null;
+      expect(oneTwoThree.isEmpty()).to.be.false;
+    });
+
+    it('[].prepend([1, 2, 3]) prints as "[1, 2, 3]"', function() {
+      expect(oneTwoThree.toString()).to.equal('[1, 2, 3]');
+    });
+
+    it('[].prepend([1, 2, .. 8]) prints as "[1, 2, .. 8]"', function() {
+      var oneThroughEight = new SForest().prepend([1, 2, 3, 4, 5, 6, 7, 8]);
+      expect(oneThroughEight.toString()).to.equal('[1, 2, 3, 4, 5, 6, 7, 8]');
     });
   });
 });
