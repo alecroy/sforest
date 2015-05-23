@@ -53,6 +53,21 @@ SForest.prototype.head = function() {
   return this.trees[0].value;
 };
 
+SForest.prototype.tail = function() {
+  if (this.isEmpty()) {
+    return this;
+  }
+
+  var sf = new SForest();
+  if (this.trees[0].size === 1) {
+    sf.trees = this.trees.slice(1);
+  } else {
+    var firstTwoTrees = [this.trees[0].left, this.trees[0].right];
+    sf.trees = firstTwoTrees.concat(this.trees.slice(1));
+  }
+  return sf;
+};
+
 SForest.prototype.iter = function(fn) {
   for (var i = 0; i < this.trees.length; i++) {
     iterTree(fn, this.trees[i]);

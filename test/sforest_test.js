@@ -86,4 +86,26 @@ describe('the SForest data structure', function() {
       expect(new SForest(['X', 'Y', 'Z']).head()).to.equal('X');
     });
   });
+
+  describe('has a tail just like a list', function() {
+    it('[] has a tail of []', function() {
+      expect(new SForest().head()).to.be.null;
+    });
+
+    it('[1] has a tail of []', function() {
+      expect(new SForest([1]).tail().toString()).to.equal('[]');
+    });
+
+    it('[1, 2] has a tail of [2]', function() {
+      expect(new SForest([1, 2]).tail().toString()).to.equal('[2]');
+    });
+
+    it('[1, 2, 3] has a tail of [2, 3]', function() {
+      expect(new SForest([1, 2, 3]).tail().toString()).to.equal('[2, 3]');
+    });
+
+    it('["X", "Y", "Z"] has a tail of [Y, Z]', function() {
+      expect(new SForest(['X', 'Y', 'Z']).tail().toString()).to.equal('[Y, Z]');
+    });
+  });
 });
