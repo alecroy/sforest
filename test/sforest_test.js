@@ -7,8 +7,21 @@ expect(SForest).to.not.equal(null);
 
 describe('the SForest data structure', function() {
   describe('has a constructor', function() {
-    it('that constructs an empty SForest, []', function() {
+    it('that makes empty SForests', function() {
       expect(new SForest().isEmpty()).to.be.true;
+    });
+
+    it('that takes empty arrays and makes empty SForests', function() {
+      expect(new SForest([]).isEmpty()).to.be.true;
+    });
+
+    it('that takes non-empty arrays and makes non-empty SForests', function() {
+      expect(new SForest([1]).isEmpty()).to.be.false;
+    });
+
+    it('that turns [1, 2, .. 8] into an SForest "[1, 2, .. 8]"', function() {
+      var oneThroughEight = new SForest([1, 2, 3, 4, 5, 6, 7, 8]);
+      expect(oneThroughEight.toString()).to.equal('[1, 2, 3, 4, 5, 6, 7, 8]');
     });
   });
 

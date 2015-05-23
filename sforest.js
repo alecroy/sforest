@@ -1,7 +1,11 @@
 'use strict';
 
-function SForest() {
+function SForest(array) {
   this.trees = [];
+
+  if (array !== undefined) {
+    this.trees = this.prepend(array).trees;
+  }
 }
 
 SForest.prototype.isEmpty = function() {
