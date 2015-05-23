@@ -45,6 +45,14 @@ SForest.prototype.prepend = function(array) {
   return sf;
 };
 
+SForest.prototype.head = function() {
+  if (this.isEmpty()) {
+    return null;
+  }
+
+  return this.trees[0].value;
+};
+
 SForest.prototype.iter = function(fn) {
   for (var i = 0; i < this.trees.length; i++) {
     iterTree(fn, this.trees[i]);
