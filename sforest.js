@@ -88,4 +88,30 @@ SForest.prototype.toString = function() {
   return '[' + strings.join(', ') + ']';
 };
 
+SForest.prototype.index = function(index) {
+  if (this.isEmpty() || !Number.isInteger(index) || index < 0) {
+    return null;
+  }
+
+  for (var i = 0; i < this.trees.length; i++) {
+    if (index < this.trees[i].size) { // It's in this tree
+      var ptr = this.trees[i];
+      while (index > 0) {
+        if (index >= (1 + ptr.size) / 2) { // Go right, -2^i
+          index -= (1 + ptr.size) / 2;
+          ptr = ptr.right;
+        } else { // Go left, -1
+          index -= 1;
+          ptr = ptr.left;
+        }
+      } // Index is 0, stop searching
+      return ptr.value;
+    } else {
+      index -= this.trees[i].size;
+    }
+  }
+
+  return null; // Looked at every tree and never found [i]
+};
+
 module.exports = SForest;

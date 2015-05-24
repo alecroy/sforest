@@ -108,4 +108,38 @@ describe('the SForest data structure', function() {
       expect(new SForest(['X', 'Y', 'Z']).tail().toString()).to.equal('[Y, Z]');
     });
   });
+
+  describe('can be indexed just like a list', function() {
+    it('[][-1] is null', function() {
+      expect(new SForest().index(-1)).to.be.null;
+    });
+
+    it('[]["cat"] is null', function() {
+      expect(new SForest().index('cat')).to.be.null;
+    });
+
+    it('[][0] is null', function() {
+      expect(new SForest().index(0)).to.be.null;
+    });
+
+    it('[1][0] is 1', function() {
+      expect(new SForest([1]).index(0)).to.equal(1);
+    });
+
+    it('[1, 2, 3][2] is 3', function() {
+      expect(new SForest([1, 2, 3]).index(2)).to.equal(3);
+    });
+
+    it('[1, 2, 3, 4, 5, 6, 7, 8][0..7] are 1..8', function() {
+      var oneThroughEight = new SForest([1, 2, 3, 4, 5, 6, 7, 8]);
+      expect(oneThroughEight.index(0)).to.equal(1);
+      expect(oneThroughEight.index(1)).to.equal(2);
+      expect(oneThroughEight.index(2)).to.equal(3);
+      expect(oneThroughEight.index(3)).to.equal(4);
+      expect(oneThroughEight.index(4)).to.equal(5);
+      expect(oneThroughEight.index(5)).to.equal(6);
+      expect(oneThroughEight.index(6)).to.equal(7);
+      expect(oneThroughEight.index(7)).to.equal(8);
+    });
+  });
 });
