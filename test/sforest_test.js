@@ -209,7 +209,7 @@ describe('the SForest data structure', function() {
     it('mapping a pure function over a list does not change it', function() {
       var oneThroughFour = new SForest([1, 2, 3, 4]);
       expect(oneThroughFour.map(squareFn)).to.not.eql(oneThroughFour);
-      expect(oneThroughFour).to.eql(new SForest([1, 2, 3, 4]));
+      expect(oneThroughFour).to.eql(new SForest([1, 2, 3, 4])); // Unchanged!
     });
 
     it('mapping a destructive function over a list changes it', function() {
@@ -217,6 +217,7 @@ describe('the SForest data structure', function() {
       var squareArrays = new SForest([[1], [4], [9], [16]]);
       var modifyFn = function(array) { array[0] *= array[0]; return array; };
       expect(arrays.map(modifyFn)).to.eql(squareArrays);
+      expect(arrays).to.not.eql(new SForest([[1], [2], [3], [4]])); // Changed!
       expect(arrays).to.eql(squareArrays);
     });
   });
@@ -232,7 +233,7 @@ describe('the SForest data structure', function() {
       var dontModifyFn = function(array) { numbers.push(array); return array; };
 
       expect(arrays.iter(dontModifyFn)).to.be.undefined;
-      expect(arrays).to.eql(new SForest([[1], [2], [3], [4]]));
+      expect(arrays).to.eql(new SForest([[1], [2], [3], [4]])); // Unchanged!
       expect(numbers).to.eql([[1], [2], [3], [4]]);
     });
 
@@ -241,6 +242,7 @@ describe('the SForest data structure', function() {
       var squareArrays = new SForest([[1], [4], [9], [16]]);
       var modifyFn = function(array) { array[0] *= array[0]; return array; };
       expect(arrays.iter(modifyFn)).to.be.undefined;
+      expect(arrays).to.not.eql(new SForest([[1], [2], [3], [4]])); // Changed!
       expect(arrays).to.eql(squareArrays);
     });
   });
