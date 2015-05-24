@@ -142,4 +142,51 @@ describe('the SForest data structure', function() {
       expect(oneThroughEight.index(7)).to.equal(8);
     });
   });
+
+  describe('can be updated just like a list', function() {
+    it('([][-1] <- 7) makes []', function() {
+      expect(new SForest().update(-1, 7).isEmpty()).to.be.true;
+    });
+
+    it('([]["cat"] <- 7) makes []', function() {
+      expect(new SForest().update('cat', 7).isEmpty()).to.be.true;
+    });
+
+    it('([][0] <- 7) makes []', function() {
+      expect(new SForest().update(0, 7).isEmpty()).to.be.true;
+    });
+
+    it('([1][0] <- 7)[0] is 7', function() {
+      expect(new SForest([1]).update(0, 7).index(0)).to.equal(7);
+    });
+
+    it('([1, 2, 3][2] <- 7)[2] is 7', function() {
+      expect(new SForest([1, 2, 3]).update(2, 7).index(2)).to.equal(7);
+    });
+
+    it('([1..8][0..7] <- 101..108)[0..7] is [101..108]', function() {
+      var oneThroughEight = new SForest([1, 2, 3, 4, 5, 6, 7, 8]);
+      expect(oneThroughEight.update(0, 101).index(0)).to.equal(101);
+      expect(oneThroughEight.update(1, 102).index(1)).to.equal(102);
+      expect(oneThroughEight.update(2, 103).index(2)).to.equal(103);
+      expect(oneThroughEight.update(3, 104).index(3)).to.equal(104);
+      expect(oneThroughEight.update(4, 105).index(4)).to.equal(105);
+      expect(oneThroughEight.update(5, 106).index(5)).to.equal(106);
+      expect(oneThroughEight.update(6, 107).index(6)).to.equal(107);
+      expect(oneThroughEight.update(7, 108).index(7)).to.equal(108);
+    });
+
+    it('updating an index does not change the original list', function() {
+      var oneThroughEight = new SForest([1, 2, 3, 4, 5, 6, 7, 8]);
+      expect(oneThroughEight.update(0, 101).index(0)).to.equal(101);
+      expect(oneThroughEight.update(1, 102).index(1)).to.equal(102);
+      expect(oneThroughEight.update(2, 103).index(2)).to.equal(103);
+      expect(oneThroughEight.update(3, 104).index(3)).to.equal(104);
+      expect(oneThroughEight.update(4, 105).index(4)).to.equal(105);
+      expect(oneThroughEight.update(5, 106).index(5)).to.equal(106);
+      expect(oneThroughEight.update(6, 107).index(6)).to.equal(107);
+      expect(oneThroughEight.update(7, 108).index(7)).to.equal(108);
+      expect(oneThroughEight).to.eql(new SForest([1, 2, 3, 4, 5, 6, 7, 8]));
+    });
+  });
 });

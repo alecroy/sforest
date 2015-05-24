@@ -114,4 +114,47 @@ SForest.prototype.index = function(index) {
   return null; // Looked at every tree and never found [i]
 };
 
+function updateTree(tree, index, element) {
+  var newTree = {
+    size: tree.size,
+    value: tree.value,
+    left: tree.left,
+    right: tree.right,
+  };
+
+  if (index === 0) {
+    newTree.value = element;
+  } else {
+    var leastOnRight = (1 + newTree.size) / 2;
+    if (index >= leastOnRight) {
+      newTree.right = updateTree(newTree.right, index - leastOnRight, element);
+    } else {
+      newTree.left = updateTree(newTree.left, index - 1, element);
+    }
+  }
+
+  return newTree;
+}
+
+SForest.prototype.update = function(index, element) {
+  if (this.isEmpty() || !Number.isInteger(index) || index < 0) {
+    return this;
+  }
+
+  for (var i = 0; i < this.trees.length; i++) {
+    if (index < this.trees[i].size) { // It's in this tree
+      var sf = new SForest();
+      sf.trees = this.trees.slice(0, i); // Before
+      sf.trees.push(updateTree(this.trees[i], index, element)); // New tree
+      sf.trees = sf.trees.concat(this.trees.slice(i + 1)); // After
+
+      return sf;
+    } else {
+      index -= this.trees[i].size;
+    }
+  }
+
+  return this; // Looked at every tree and never found/updated [i]
+};
+
 module.exports = SForest;
