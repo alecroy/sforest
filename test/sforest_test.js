@@ -189,4 +189,59 @@ describe('the SForest data structure', function() {
       expect(oneThroughEight).to.eql(new SForest([1, 2, 3, 4, 5, 6, 7, 8]));
     });
   });
+
+  describe('can be mapped over just like a list', function() {
+    var squareFn = function(n) { return n * n; };
+
+    it('mapping x -> x*x over [] makes []', function() {
+      expect(new SForest().map(squareFn).isEmpty()).to.be.true;
+    });
+
+    it('mapping x -> x*x over [2] makes [4]', function() {
+      expect(new SForest([2]).map(squareFn)).to.eql(new SForest([4]));
+    });
+
+    it('mapping x -> x*x over [1, 2, 3, 4] makes [1, 4, 9, 16]', function() {
+      var squares = new SForest([1, 4, 9, 16]);
+      expect(new SForest([1, 2, 3, 4]).map(squareFn)).to.eql(squares);
+    });
+
+    it('mapping a pure function over a list does not change it', function() {
+      var oneThroughFour = new SForest([1, 2, 3, 4]);
+      expect(oneThroughFour.map(squareFn)).to.not.eql(oneThroughFour);
+      expect(oneThroughFour).to.eql(new SForest([1, 2, 3, 4]));
+    });
+
+    it('mapping a destructive function over a list changes it', function() {
+      var arrays = new SForest([[1], [2], [3], [4]]);
+      var squareArrays = new SForest([[1], [4], [9], [16]]);
+      var modifyFn = function(array) { array[0] *= array[0]; return array; };
+      expect(arrays.map(modifyFn)).to.eql(squareArrays);
+      expect(arrays).to.eql(squareArrays);
+    });
+  });
+
+  describe('can be iterated over just like a list', function() {
+    it('iterating over a list returns undefined', function() {
+      expect(new SForest([1]).iter(function(x) { return x; })).to.be.undefined;
+    });
+
+    it('iterating a pure function over a list does not change it', function() {
+      var arrays = new SForest([[1], [2], [3], [4]]);
+      var numbers = [];
+      var dontModifyFn = function(array) { numbers.push(array); return array; };
+
+      expect(arrays.iter(dontModifyFn)).to.be.undefined;
+      expect(arrays).to.eql(new SForest([[1], [2], [3], [4]]));
+      expect(numbers).to.eql([[1], [2], [3], [4]]);
+    });
+
+    it('iterating a destructive function over a list changes it', function() {
+      var arrays = new SForest([[1], [2], [3], [4]]);
+      var squareArrays = new SForest([[1], [4], [9], [16]]);
+      var modifyFn = function(array) { array[0] *= array[0]; return array; };
+      expect(arrays.iter(modifyFn)).to.be.undefined;
+      expect(arrays).to.eql(squareArrays);
+    });
+  });
 });

@@ -88,6 +88,25 @@ SForest.prototype.toString = function() {
   return '[' + strings.join(', ') + ']';
 };
 
+function mapTree(fn, tree) {
+  if (tree.size === 1) {
+    return {size: 1, value: fn(tree.value), left: null, right: null};
+  }
+
+  var newValue = fn(tree.value);
+  var newLeft = mapTree(fn, tree.left);
+  var newRight = mapTree(fn, tree.right);
+  return {size: tree.size, value: newValue, left: newLeft, right: newRight};
+}
+
+SForest.prototype.map = function(fn) {
+  var sf = new SForest();
+  for (var i = 0; i < this.trees.length; i++) {
+    sf.trees.push(mapTree(fn, this.trees[i]));
+  }
+  return sf;
+};
+
 SForest.prototype.index = function(index) {
   if (this.isEmpty() || !Number.isInteger(index) || index < 0) {
     return null;
